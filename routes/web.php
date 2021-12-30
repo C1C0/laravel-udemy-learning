@@ -17,8 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home.index');
 
-Route::get('/contact', function(){
-   return 'Contact';
+Route::get('/contact', function () {
+    return 'Contact';
 })->name('home.contact');
 
 // Parameters are passed to function argument list
@@ -27,12 +27,24 @@ Route::get('/contact', function(){
 
 // Names can consist of alphabetical chars. and "_"
 // should be enclosed in {} braces
-Route::get('/posts/{id}', function(int $id){
-    return 'Blog Post ' . $id;
-})->name('posts.show');
+Route::get('/posts/{id}', function (int $id) {
+    return 'Blog Post '.$id;
+})
+
+    // Defining constraint
+    ->where([
+        'id' => '[0-9]+',
+    ])
+    // OR you can use predefined constraint functions
+    ->whereAlpha('id')
+    ->whereNumber('id')
+    ->whereAlphaNumeric('id')
+    ->whereUuid('id')
+
+    ->name('posts.show');
 
 // Optional parameter
 // required to specify DEFAULT VALUE
-Route::get('/recent-posts/{days_ago?}', function(int $daysAgo = 20){
-    return "Posts from ". $daysAgo . " days ago";
+Route::get('/recent-posts/{days_ago?}', function (int $daysAgo = 20) {
+    return "Posts from ".$daysAgo." days ago";
 })->name('posts.recent.index');
