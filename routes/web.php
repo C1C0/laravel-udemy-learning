@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // Naming conventions (in /resources/views/...):
+    // <name of file>
+    // <name of folder>.<name of file>
+    // <name of folder>.<name of folder>.<name of file>, ... etc
+    return view('home.index');
 })->name('home.index');
 
 Route::get('/contact', function () {
