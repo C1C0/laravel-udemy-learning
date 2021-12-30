@@ -14,6 +14,15 @@
     <p> {{ $post['content'] }}</p>
 @endsection
 
+{{-- Conditional rendering --}}
+@if($post['is_new'])
+    <div>A new blog post</div>
+@elseif(!$post['is_new'])
+    <div>An old blog post</div>
+@else
+    <div>Dummy data</div>
+@endif
+
 @section('footer')
     @parent
 

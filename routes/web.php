@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/','home.index')->name('home.index');;
-Route::view('/contact','home.contact')->name('home.contact');;
+Route::view('/', 'home.index')->name('home.index');;
+Route::view('/contact', 'home.contact')->name('home.contact');;
 
 // Parameters are passed to function argument list
 // in order as they're defined in URI
@@ -26,12 +26,14 @@ Route::get('/posts/{id}', function (int $id) {
     $posts = [
         1 => [
             'title' => 'Intro to Laravel',
-            'content' => 'This is a short intro to Laravel'
+            'content' => 'This is a short intro to Laravel',
+            'is_new' => true,
         ],
         2 => [
             'title' => 'Intro to PHP',
-            'content' => 'This is a short intro to PHP'
-        ]
+            'content' => 'This is a short intro to PHP',
+            'is_new' => false,
+        ],
     ];
 
     // throws an HTTP exception, if a given boolean expression evaluates to TRUE
