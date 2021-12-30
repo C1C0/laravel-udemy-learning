@@ -20,3 +20,13 @@ Route::get('/', function () {
 Route::get('/contact', function(){
    return 'Contact';
 })->name('home.contact');
+
+// Parameters are passed to function argument list
+// in order as they're defined in URI
+// Name doesn't have to match
+
+// Names can consist of alphabetical chars. and "_"
+// should be enclosed in {} braces
+Route::get('/posts/{id}', function(int $id){
+    return 'Blog Post ' . $id;
+});
