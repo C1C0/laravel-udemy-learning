@@ -13,17 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // Naming conventions (in /resources/views/...):
-    // <name of file>
-    // <name of folder>.<name of file>
-    // <name of folder>.<name of folder>.<name of file>, ... etc
-    return view('home.index');
-})->name('home.index');
-
-Route::get('/contact', function () {
-    return view('home.contact');
-})->name('home.contact');
+Route::view('/','home.index')->name('home.index');;
+Route::view('/contact','home.contact')->name('home.contact');;
 
 // Parameters are passed to function argument list
 // in order as they're defined in URI
