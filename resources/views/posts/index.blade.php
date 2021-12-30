@@ -8,13 +8,10 @@
 
 @section('content')
 
-    @notEmpty($posts)
-
-    @foreach($posts as $key => $post)
+    @forelse($posts as $key => $post)
         <h3> {{ $key }}. {{ $post['title'] }}</h3>
-    @endforeach
+    @empty
+        <div> No posts here</div>
+    @endforelse
 
-    @else
-        <div> No posts posted here </div>
-    @endnotEmpty
 @endsection
