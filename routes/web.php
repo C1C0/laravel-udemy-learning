@@ -32,7 +32,22 @@ Route::get('/contact', function () {
 // Names can consist of alphabetical chars. and "_"
 // should be enclosed in {} braces
 Route::get('/posts/{id}', function (int $id) {
-    return 'Blog Post '.$id;
+    $posts = [
+        1 => [
+            'title' => 'Intro to Laravel',
+            'content' => 'This is a short intro to Laravel'
+        ],
+        2 => [
+            'title' => 'Intro to PHP',
+            'content' => 'This is a short intro to PHP'
+        ]
+    ];
+
+    // throws an HTTP exception, if a given boolean expression evaluates to TRUE
+    abort_if(!isset($posts[$id]), 404);
+
+    // Passing data to view
+    return view('posts.show', ['post' => $posts[$id]]);
 })->name('posts.show');
 
 // Optional parameter
