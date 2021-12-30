@@ -29,19 +29,7 @@ Route::get('/contact', function () {
 // should be enclosed in {} braces
 Route::get('/posts/{id}', function (int $id) {
     return 'Blog Post '.$id;
-})
-
-    // Defining constraint
-    ->where([
-        'id' => '[0-9]+',
-    ])
-    // OR you can use predefined constraint functions
-    ->whereAlpha('id')
-    ->whereNumber('id')
-    ->whereAlphaNumeric('id')
-    ->whereUuid('id')
-
-    ->name('posts.show');
+})->name('posts.show');
 
 // Optional parameter
 // required to specify DEFAULT VALUE
