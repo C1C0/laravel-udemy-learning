@@ -8,14 +8,10 @@
 
 @section('content')
 
-    @forelse($posts as $key => $post)
+    {{-- Includes forelse functionality and calls specified partial, doesn't inherit all variables as @include does
 
-        {{-- @include inherits all variables that are available at the place
-             where it was called, also accepts array for variable passing --}}
-        @include('posts.partials.post', [])
-
-    @empty
-        <div> No posts here</div>
-    @endforelse
+         Arguments: partial name, collection to render, iteration variable inside template
+         optional: @empty behaviour --}}
+    @each('posts.partials.post', $posts, 'post')
 
 @endsection
