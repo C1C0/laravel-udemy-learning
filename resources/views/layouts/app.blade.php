@@ -13,12 +13,8 @@
     <title>Laravel App - @yield('title')</title>
 </head>
 <body>
-{{-- Renders content of specific section --}}
-{{-- Defined in child templates --}}
 @yield('content')
 
-{{-- This syntax used, if we expect the @section being extentded --}}
-{{-- Important: Ending with @show directive --}}
 @section('footer')
     <h2 style="margin-top: 1rem">FOOTER</h2>
 @show
