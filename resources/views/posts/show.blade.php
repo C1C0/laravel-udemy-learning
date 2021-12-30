@@ -23,6 +23,20 @@
     <div>Dummy data</div>
 @endif
 
+@unless($post['is_new'])
+    <div>Using unless on old post</div>
+@endunless
+
+{{-- same as isset() in php --}}
+@isset($post['has_comments'])
+    <div>The post has some comments</div>
+@endisset
+
+{{-- same as empty() in php --}}
+@empty($post['has_comments'])
+    <div>The post doesn't have any comments</div>
+@endempty
+
 @section('footer')
     @parent
 
