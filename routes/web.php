@@ -29,4 +29,10 @@ Route::get('/contact', function(){
 // should be enclosed in {} braces
 Route::get('/posts/{id}', function(int $id){
     return 'Blog Post ' . $id;
-});
+})->name('posts.show');
+
+// Optional parameter
+// required to specify DEFAULT VALUE
+Route::get('/recent-posts/{days_ago?}', function(int $daysAgo = 20){
+    return "Posts from ". $daysAgo . " days ago";
+})->name('posts.recent.index');
