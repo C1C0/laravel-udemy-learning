@@ -9,12 +9,11 @@
 @section('content')
 
     @forelse($posts as $key => $post)
-        {{-- Possibilty to use @break, @continue, $loop --}}
-        @if($loop->even)
-            <h3> {{ $key }}. {{ $post['title'] }}</h3>
-        @else
-            <h3 style="background-color: #ddd"> {{ $key }}. {{ $post['title'] }}</h3>
-        @endif
+
+        {{-- @include inherits all variables that are available at the place
+             where it was called, also accepts array for variable passing --}}
+        @include('posts.partials.post', [])
+
     @empty
         <div> No posts here</div>
     @endforelse
