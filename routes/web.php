@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,20 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$posts = [
-    1 => [
-        'title' => 'Intro to Laravel',
-        'content' => 'This is a short intro to Laravel',
-        'is_new' => true,
-        'has_comments' => true,
-    ],
-    2 => [
-        'title' => 'Intro to PHP',
-        'content' => 'This is a short intro to PHP',
-        'is_new' => false,
-    ],
-];
-
 // Syntax for using controller actions
 Route::get('/', [HomeController::class, 'home'])->name('home.index');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
@@ -37,54 +23,22 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact')
 // Syntax for using single action controller
 Route::get('/single', AboutController::class);
 
-Route::get('/posts/', function (Request $request) use ($posts) {
-    return view('posts.index', ['posts' => $posts]);
-})->name('posts.index');
+Route::resource('posts', PostsController::class)
+// if we wanna specify to use all CRUD actions Except specified
+    ->except(['update', 'edit'])
+// if we wanna specify to use only certain CRUD actions
+    ->only(['index', 'show']);
 
-Route::get('/posts/{id}', function (int $id) use ($posts) {
-    abort_if(!isset($posts[$id]), 404);
-
-    return view('posts.show', ['post' => $posts[$id]]);
-})->name('posts.show');
+//Route::get('/posts/', function (Request $request) use ($posts) {
+//    return view('posts.index', ['posts' => $posts]);
+//})->name('posts.index');
+//
+//Route::get('/posts/{id}', function (int $id) use ($posts) {
+//    abort_if(!isset($posts[$id]), 404);
+//
+//    return view('posts.show', ['post' => $posts[$id]]);
+//})->name('posts.show');
 
 Route::get('/recent-posts/{days_ago?}', function (int $daysAgo = 20) {
     return "Posts from ".$daysAgo." days ago";
 })->name('posts.recent.index');
-
-// Grouped routes share attributes: URL prefix, Name prefix, Middleware
-Route::prefix('/fun')->name('fun.')->group(function () use ($posts) {
-    Route::get('/responses', function () use ($posts) {
-        return response($posts, 201)
-            ->header('Content-Type', 'application/json')
-            ->cookie('MY_COOKIE', 'Kiko', 3600);
-    })->name('responses');
-
-    Route::get('/redirect', function () {
-        return redirect('/contact');
-    })->name('redirect');
-
-    Route::get('/back', function () {
-        return back();
-    })->name('back');
-
-    Route::get('/named-route', function () {
-        return redirect()->route('posts.show', 1);
-    })->name('named-route');
-
-    Route::get('/away', function () {
-        return redirect()->away('https://google.com');
-    })->name('away');
-
-    Route::get('/json', function () use ($posts) {
-        return response()->json($posts);
-    })->name('json');
-
-    Route::get('/download', function () use ($posts) {
-        return response()->download(public_path('/daniel.jpg'), 'face.jpg');
-    })->name('download');
-
-    Route::get('/display-image', function () {
-        return response()->file(public_path('/daniel.jpg'));
-    })->name('display-image');
-
-});
