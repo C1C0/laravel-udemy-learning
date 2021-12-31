@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,23 @@ $posts = [
 Route::view('/', 'home.index')->name('home.index');;
 Route::view('/contact', 'home.contact')->name('home.contact');;
 
-Route::get('/posts', function () use ($posts) {
+Route::get('/posts/', function (Request $request) use ($posts) {
+    // returns array of all query parameters
+    dd($request->all());
+
+    // behaves almost same as ->all(), but returns collection
+    dd($request->collect());
+
+    // returns only value of specified parameter or NULL or default value if specified
+    // input look at all possible input places (whole request payload):
+    // HTML form, query, XHR request
+    dd($request->input('niae', 1));
+
+    // looks only into query
+    // if called without parameters, all of the query string values are returned as associative array
+    dd($request->query('niae', 1));
+
+
     return view('posts.index', ['posts' => $posts]);
 })->name('posts.index');
 
