@@ -47,6 +47,33 @@ Route::get('/posts/', function (Request $request) use ($posts) {
     // if called without parameters, all of the query string values are returned as associative array
     dd($request->query('niae', 1));
 
+    // Additional options:
+
+    // when dealing with HTML elements which returns only 'truthy' values
+    // returns true for: 1, "1", true, "true", "on", "yes"
+    $request->boolean('HTMLOnCheckbox');
+
+    // White(black)-listing certain values from the input
+    // array or non-array values allowed
+    $request->only(['username', 'password'], 'idunno');
+    $request->except(['credit_card'], 'kidney');
+
+    // check if request has specified value(s)
+    if($request->has(['name', 'email'], 'maybeMe'));
+    // check if request is missing (they cannot be presented) certain values
+    if($request->missing(['name', 'email'], 'maybeMe'));
+
+    // has with callback
+    // only string as $key allowed
+    $request->whenHas('email', function($input){});
+
+    // check if request has at least one presented
+    if($request->hasAny(['name', 'email'], 'maybeMe'));
+
+    // checks if value name is presented and the data is FILLED (not empty)
+    if($request->filled('name'));
+    $request->whenFilled('name', function($input){});
+
 
     return view('posts.index', ['posts' => $posts]);
 })->name('posts.index');
