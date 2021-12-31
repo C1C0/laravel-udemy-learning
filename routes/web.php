@@ -58,3 +58,30 @@ Route::get('/fun/responses', function () use ($posts) {
         // ])
         ->cookie('MY_COOKIE', 'Kiko', 3600);
 });
+
+Route::get('/fun/redirect', function () {
+    // Redirect to specified page
+    return redirect('/contact');
+});
+
+Route::get('/fun/back', function () {
+    // Returning to previous page
+    // Utilizes session -> the route should be in "web" middleware group
+    return back();
+});
+
+Route::get('/fun/named-route', function () {
+    // redirecting based on name
+
+    // adds parameter as in route ... /posts/1
+    return redirect()->route('posts.show', 1);
+
+    // assigns parameter to specific name ... if not id, error would be thrown
+    return redirect()->route('posts.show', ['id' => 1]);
+});
+
+Route::get('/fun/away', function () {
+    // redirecting from our website domain
+    return redirect()->away('https://google.com');
+});
+
