@@ -76,7 +76,9 @@ Route::get('/posts/', function (Request $request) use ($posts) {
 
 
     return view('posts.index', ['posts' => $posts]);
-})->name('posts.index');
+})->name('posts.index')
+    // usually use ALIAS of middleware specified in Kernel.php
+    ->middleware('auth');
 
 Route::get('/posts/{id}', function (int $id) use ($posts) {
     abort_if(!isset($posts[$id]), 404);
