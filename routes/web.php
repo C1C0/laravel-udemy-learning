@@ -90,4 +90,9 @@ Route::get('/fun/json', function () use($posts) {
     return response()->json($posts);
 });
 
+Route::get('/fun/download', function () use($posts) {
+    // redirecting from our website domain
+    // it's required that file has ASCII file name
+    return response()->download(public_path('/daniel.jpg'), 'face.jpg');
+});
 
