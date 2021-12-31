@@ -77,11 +77,17 @@ Route::get('/fun/named-route', function () {
     return redirect()->route('posts.show', 1);
 
     // assigns parameter to specific name ... if not id, error would be thrown
-    return redirect()->route('posts.show', ['id' => 1]);
+//    return redirect()->route('posts.show', ['id' => 1]);
 });
 
 Route::get('/fun/away', function () {
     // redirecting from our website domain
     return redirect()->away('https://google.com');
 });
+
+Route::get('/fun/json', function () use($posts) {
+    // redirecting from our website domain
+    return response()->json($posts);
+});
+
 
