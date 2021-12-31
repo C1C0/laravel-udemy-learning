@@ -44,59 +44,64 @@ Route::get('/recent-posts/{days_ago?}', function (int $daysAgo = 20) {
     return "Posts from ".$daysAgo." days ago";
 })->name('posts.recent.index');
 
-Route::get('/fun/responses', function () use ($posts) {
-    // Use response, when there is need to add something else like header or cookie
-    // or change resp. code
-    // On this method you can add ->view() as well
-    return response($posts, 201)
-        // -> view()
-        ->header('Content-Type', 'application/json')
-        // Posibility to use also
-        // ->withHeaders([
-        //     'header1' => '1',
-        //     'header2' => '2',
-        // ])
-        ->cookie('MY_COOKIE', 'Kiko', 3600);
-});
+// Grouped routes share attributes: URL prefix, Name prefix, Middleware
+Route::prefix('/fun')->name('fun.')->group(function() use($posts){
+    Route::get('/responses', function () use ($posts) {
 
-Route::get('/fun/redirect', function () {
-    // Redirect to specified page
-    return redirect('/contact');
-});
+        // Use response, when there is need to add something else like header or cookie
+        // or change resp. code
+        // On this method you can add ->view() as well
+        return response($posts, 201)
+            // -> view()
+            ->header('Content-Type', 'application/json')
+            // Posibility to use also
+            // ->withHeaders([
+            //     'header1' => '1',
+            //     'header2' => '2',
+            // ])
+            ->cookie('MY_COOKIE', 'Kiko', 3600);
+    })->name('responses');
 
-Route::get('/fun/back', function () {
-    // Returning to previous page
-    // Utilizes session -> the route should be in "web" middleware group
-    return back();
-});
+    Route::get('/redirect', function () {
+        // Redirect to specified page
+        return redirect('/contact');
+    })->name('redirect');
 
-Route::get('/fun/named-route', function () {
-    // redirecting based on name
+    Route::get('/back', function () {
+        // Returning to previous page
+        // Utilizes session -> the route should be in "web" middleware group
+        return back();
+    })->name('back');
 
-    // adds parameter as in route ... /posts/1
-    return redirect()->route('posts.show', 1);
+    Route::get('/named-route', function () {
+        // redirecting based on name
 
-    // assigns parameter to specific name ... if not id, error would be thrown
+        // adds parameter as in route ... /posts/1
+        return redirect()->route('posts.show', 1);
+
+        // assigns parameter to specific name ... if not id, error would be thrown
 //    return redirect()->route('posts.show', ['id' => 1]);
-});
+    })->name('named-route');
 
-Route::get('/fun/away', function () {
-    // redirecting from our website domain
-    return redirect()->away('https://google.com');
-});
+    Route::get('/away', function () {
+        // redirecting from our website domain
+        return redirect()->away('https://google.com');
+    })->name('away');
 
-Route::get('/fun/json', function () use ($posts) {
-    // redirecting from our website domain
-    return response()->json($posts);
-});
+    Route::get('/json', function () use ($posts) {
+        // redirecting from our website domain
+        return response()->json($posts);
+    })->name('json');
 
-Route::get('/fun/download', function () use ($posts) {
-    // redirecting from our website domain
-    // it's required that file has ASCII file name
-    return response()->download(public_path('/daniel.jpg'), 'face.jpg');
-});
+    Route::get('/download', function () use ($posts) {
+        // redirecting from our website domain
+        // it's required that file has ASCII file name
+        return response()->download(public_path('/daniel.jpg'), 'face.jpg');
+    })->name('download');
 
-Route::get('/fun/display-image', function () {
-    // Displays the image in the user's browser
-    return response()->file(public_path('/daniel.jpg'));
+    Route::get('/display-image', function () {
+        // Displays the image in the user's browser
+        return response()->file(public_path('/daniel.jpg'));
+    })->name('display-image');
+
 });
