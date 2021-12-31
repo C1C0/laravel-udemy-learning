@@ -30,8 +30,8 @@ $posts = [
 Route::view('/', 'home.index')->name('home.index');;
 Route::view('/contact', 'home.contact')->name('home.contact');;
 
-Route::get('/posts', function() use($posts){
-    return view ('posts.index', ['posts' => $posts]);
+Route::get('/posts', function () use ($posts) {
+    return view('posts.index', ['posts' => $posts]);
 })->name('posts.index');
 
 Route::get('/posts/{id}', function (int $id) use ($posts) {
@@ -43,3 +43,18 @@ Route::get('/posts/{id}', function (int $id) use ($posts) {
 Route::get('/recent-posts/{days_ago?}', function (int $daysAgo = 20) {
     return "Posts from ".$daysAgo." days ago";
 })->name('posts.recent.index');
+
+Route::get('/fun/responses', function () use ($posts) {
+    // Use response, when there is need to add something else like header or cookie
+    // or change resp. code
+    // On this method you can add ->view() as well
+    return response($posts, 201)
+        // -> view()
+        ->header('Content-Type', 'application/json')
+        // Posibility to use also
+        // ->withHeaders([
+        //     'header1' => '1',
+        //     'header2' => '2',
+        // ])
+        ->cookie('MY_COOKIE', 'Kiko', 3600);
+});
