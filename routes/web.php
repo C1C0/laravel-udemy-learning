@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,8 +31,11 @@ $posts = [
 ];
 
 // Syntax for using controller actions
-Route::get('/', [HomeController::class, 'home'])->name('home.index');;
-Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');;
+Route::get('/', [HomeController::class, 'home'])->name('home.index');
+Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
+
+// Syntax for using single action controller
+Route::get('/single', AboutController::class);
 
 Route::get('/posts/', function (Request $request) use ($posts) {
     return view('posts.index', ['posts' => $posts]);
