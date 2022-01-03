@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -38,21 +39,17 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StorePost  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        $request->validate([
-            // bail -> stops other validations if not current met
-            'title' => ['bail', 'required', 'min:5', 'max:100'],
-            'content' => ['required', 'min:10'],
-        ]);
+        $validated = $request->validated();
 
         $post = new BlogPost();
 
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        $post->title = $validated['title'];
+        $post->content = $validated['content'];
 
         $post->save();
 
