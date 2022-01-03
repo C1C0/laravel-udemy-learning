@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    // Actions, which will be next called in route file
     public function home(){
         return view('home.index');
     }

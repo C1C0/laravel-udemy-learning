@@ -16,17 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Syntax for using controller actions
 Route::get('/', [HomeController::class, 'home'])->name('home.index');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
-// Syntax for using single action controller
 Route::get('/single', AboutController::class);
 
 Route::resource('posts', PostsController::class)
-// if we wanna specify to use all CRUD actions Except specified
     ->except(['update', 'edit'])
-// if we wanna specify to use only certain CRUD actions
     ->only(['index', 'show']);
 
 //Route::get('/posts/', function (Request $request) use ($posts) {
