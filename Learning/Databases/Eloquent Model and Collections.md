@@ -17,6 +17,24 @@ should return true
 
 _**`Note`**_: Also the `updated_at` column updates when `->save()` is called.
 
+### Mass assignment
+
+Before using, important to add `protected $fillable = []` into Model's class.
+
+```php
+// Prepare and safe model to DB
+BlogPost::create()
+
+// Prepare but does not safe
+$post = BlogPost::make()
+$post->save()
+
+// Usefull for modifying existing instance
+$post = new BlogPost()
+$post->fill()
+$post->save()
+```
+
 ## Getting Records
 
 To retrieve a record
