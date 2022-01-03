@@ -53,6 +53,8 @@ class PostsController extends Controller
 
         $post->save();
 
+        $request->session()->flash('status', 'The blog post was created');
+
         return redirect()->route('posts.show', ['post' => $post->id]);
     }
 

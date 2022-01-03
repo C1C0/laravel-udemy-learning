@@ -13,6 +13,11 @@
     <title>Laravel App - @yield('title')</title>
 </head>
 <body>
+@if(session('status'))
+    <div style="background-color: #4a5568; color: white">
+        {{ session('status') }}
+    </div>
+@endif
 @yield('content')
 
 @section('footer')
