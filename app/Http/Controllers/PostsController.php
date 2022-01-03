@@ -39,11 +39,18 @@ class PostsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        $post = new BlogPost();
 
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+
+        $post->save();
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
