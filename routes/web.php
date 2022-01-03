@@ -22,8 +22,7 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact')
 Route::get('/single', AboutController::class);
 
 Route::resource('posts', PostsController::class)
-    ->except(['update', 'edit'])
-    ->only(['index', 'show']);
+    ->only(['index', 'show', 'create', 'store']);
 
 //Route::get('/posts/', function (Request $request) use ($posts) {
 //    return view('posts.index', ['posts' => $posts]);
