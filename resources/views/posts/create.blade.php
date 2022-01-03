@@ -8,13 +8,13 @@
         {{-- check for CSRF is done in csrf middleware --}}
         @csrf
 
-        <div><input type="text" name="title"></div>
+        <div><input type="text" name="title" value="{{ old('title') }}"></div>
         @error('title')
         <p>{{$message}}</p>
         @enderror
         {{-- show specific error --}}
 
-        <div><textarea name="content"></textarea></div>
+        <div><textarea name="content">{{ old('content') }}</textarea></div>
 
         {{-- Show all errors --}}
         @if($errors->any())
