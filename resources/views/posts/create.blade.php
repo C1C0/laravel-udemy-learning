@@ -7,26 +7,7 @@
         {{-- Without @csrf -> 419 returned (POST, PUT, PATCH, DELETE) --}}
         {{-- check for CSRF is done in csrf middleware --}}
         @csrf
-
-        <div><input type="text" name="title" value="{{ old('title') }}"></div>
-        @error('title')
-        <p>{{$message}}</p>
-        @enderror
-        {{-- show specific error --}}
-
-        <div><textarea name="content">{{ old('content') }}</textarea></div>
-
-        {{-- Show all errors --}}
-        @if($errors->any())
-            <div>
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li> {{ $error }} </li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
+        @include('posts.partials.form')
         <div><input type="submit" name="Create"></div>
     </form>
 @endsection
