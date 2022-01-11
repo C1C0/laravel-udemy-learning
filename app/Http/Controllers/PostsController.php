@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use function PHPUnit\Framework\returnArgument;
 
 class PostsController extends Controller
@@ -81,11 +82,18 @@ class PostsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(StorePost $request, $id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        $validated = $request->validated();
+        $post->fill($validated);
+        $post->save();
+
+        $request->session()->flash('status', 'Blog post was updated !');
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
