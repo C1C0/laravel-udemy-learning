@@ -3,11 +3,6 @@
 @section('title', 'Home page')
 
 @section('content')
-    <h1>Hello world</h1>
-@endsection
-
-@section('footer')
-    @parent
-
-    <h4>I'm very important here as well</h4>
+    <h1>Welcome to the laravel !</h1>
+    <h4>This is a blog website.</h4>
 @endsection

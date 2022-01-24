@@ -1,6 +1,9 @@
 # Testing in Laravel
 Laravel run tests in separated environment
 
+## Creating tests
+`php artisan make:test <Test Class>`
+
 # Unit tests
 
 Test for small isolated parts of code like one class or one meta-functionality
