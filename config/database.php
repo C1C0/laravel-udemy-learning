@@ -43,6 +43,12 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
+        // tell laravel that this DB should be created in memory (used for tests)
+        'sqlite_testing' => [
+            'driver' => 'sqlite',
+            'database' => ":memory:",
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
