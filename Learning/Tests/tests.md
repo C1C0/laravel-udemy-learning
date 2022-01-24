@@ -61,3 +61,6 @@ class ExampleTest extends TestCase{
 ### Configuration cache
 To avoid problems related to having configuration cached - run:
 `php artisan config:clear`
+
+### Driver could not be found
+Check if Sqlite installed for php version or enabled as extension in `php.ini`
