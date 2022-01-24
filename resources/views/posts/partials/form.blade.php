@@ -9,7 +9,7 @@
     <input type="text" id="title" name="title" value="{{ old('title', optional($post ?? null)->title) }}" class="form-control">
 </div>
 @error('title')
-<p>{{$message}}</p>
+<div class="alert alert-danger">{{$message}}</div>
 @enderror
 {{-- show specific error --}}
 
@@ -20,10 +20,10 @@
 
 {{-- Show all errors --}}
 @if($errors->any())
-    <div>
-        <ul>
+    <div class="mb-3">
+        <ul class="list-group">
             @foreach($errors->all() as $error)
-                <li> {{ $error }} </li>
+                <li class="list-group-item list-group-item-danger"> {{ $error }} </li>
             @endforeach
         </ul>
     </div>

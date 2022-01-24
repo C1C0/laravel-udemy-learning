@@ -29,15 +29,11 @@
 </div>
 <div class="container">
     @if(session('status'))
-        <div style="background-color: #4a5568; color: white">
+        <div class="alert alert-success">
             {{ session('status') }}
         </div>
     @endif
     @yield('content')
-
-    @section('footer')
-        <h2 style="margin-top: 1rem">FOOTER</h2>
-    @show
 </div>
 </body>
 </html>
