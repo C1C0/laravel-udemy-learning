@@ -8,6 +8,6 @@
         {{-- check for CSRF is done in csrf middleware --}}
         @csrf
         @include('posts.partials.form')
-        <div><input type="submit" name="Create"></div>
+        <div><input type="submit" name="Create" class="btn btn-primary btn-block"></div>
     </form>
 @endsection
