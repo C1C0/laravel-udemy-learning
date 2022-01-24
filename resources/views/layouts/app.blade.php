@@ -27,16 +27,17 @@
         <a class="p-2 text-dark" href="{{ route('posts.create') }}">Add Blog Post</a>
     </nav>
 </div>
-@if(session('status'))
-    <div style="background-color: #4a5568; color: white">
-        {{ session('status') }}
-    </div>
-@endif
-@yield('content')
+<div class="container">
+    @if(session('status'))
+        <div style="background-color: #4a5568; color: white">
+            {{ session('status') }}
+        </div>
+    @endif
+    @yield('content')
 
-@section('footer')
-    <h2 style="margin-top: 1rem">FOOTER</h2>
-@show
-
+    @section('footer')
+        <h2 style="margin-top: 1rem">FOOTER</h2>
+    @show
+</div>
 </body>
 </html>
