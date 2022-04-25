@@ -74,4 +74,37 @@ class PostTest extends TestCase
         $this->assertEquals($messages['content'][0], 'The content must be at least 10 characters.');
 
     }
+
+    public function testUpdateValid()
+    {
+        # Arrange
+        $post = new BlogPost();
+        $post->title = 'New Title';
+        $post->content = 'Content of the blog post';
+        $post->save();
+
+        # Check if in DB record with attribute
+        // checks all colums
+        $this->assertDatabaseHas('blog_posts', $post->getAttributes());
+
+        $params = [
+            'title' => 'A new named title',
+            'content' => 'content was changed',
+        ];
+
+        $this->put("/posts/{$post->id}", $params)
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'), 'Blog post was updated !');
+
+        // Tests that old $post data are not present
+        $this->assertDatabaseMissing('blog_posts', $post->getAttributes());
+
+        // Checks the new data
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => $params['title'],
+            'id' => $post->id,
+        ]);
+    }
 }
