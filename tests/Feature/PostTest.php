@@ -17,7 +17,7 @@ class PostTest extends TestCase
         $response->assertSeeText('No posts here');
     }
 
-    public function tsetsSee1BlogPostWhenThereIs1()
+    public function testSee1BlogPostWhenThereIs1()
     {
         # Arrange
         $post = new BlogPost();
@@ -30,11 +30,24 @@ class PostTest extends TestCase
 
         # Assert
         $response->assertSeeText($post->title);
-        $response->assertSeeText($post->content);
 
         # Check if in DB record with attribute
         $this->assertDatabaseHas('blog_posts', [
             'title' => $post->title,
         ]);
+    }
+
+    public function testStoreValid()
+    {
+        $params = [
+            'title' => 'Valid title',
+            'content' => 'At least 10 characters',
+        ];
+
+        $this->post('/posts', $params)
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'), 'The blog post was created');
     }
 }
