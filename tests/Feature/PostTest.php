@@ -20,10 +20,7 @@ class PostTest extends TestCase
     public function testSee1BlogPostWhenThereIs1()
     {
         # Arrange
-        $post = new BlogPost();
-        $post->title = 'New Title';
-        $post->content = 'Content of the blog post';
-        $post->save();
+        $post = $this->createDummyBlogpost();
 
         # Act
         $response = $this->get('/posts');
@@ -78,10 +75,7 @@ class PostTest extends TestCase
     public function testUpdateValid()
     {
         # Arrange
-        $post = new BlogPost();
-        $post->title = 'New Title';
-        $post->content = 'Content of the blog post';
-        $post->save();
+        $post = $this->createDummyBlogpost();
 
         # Check if in DB record with attribute
         // checks all colums
@@ -106,5 +100,29 @@ class PostTest extends TestCase
             'title' => $params['title'],
             'id' => $post->id,
         ]);
+    }
+
+    public function testDelete()
+    {
+        $post = $this->createDummyBlogpost();
+
+        $this->assertDatabaseHas('blog_posts', $post->getAttributes());
+
+        $this->delete("/posts/{$post->id}")
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'), 'Post Deleted !');
+        $this->assertDatabaseMissing('blog_posts', $post->getAttributes());
+    }
+
+    private function createDummyBlogpost($title = 'New Title', $content = 'Content of the blog post'): BlogPost
+    {
+        $post = new BlogPost();
+        $post->title = $title;
+        $post->content = $content;
+        $post->save();
+
+        return $post;
     }
 }
