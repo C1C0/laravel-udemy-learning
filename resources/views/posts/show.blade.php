@@ -20,4 +20,12 @@
         <div class="alert alert-info">New !</div>
     @endif
 
+    @forelse($post->comments as $comment)
+        <div class="p-2 bg-info mt-2">
+            <p>{{$comment->content}}</p>
+        </div>
+    @empty
+        <p>No comments posted yet</p>
+    @endforelse
+
 @endsection

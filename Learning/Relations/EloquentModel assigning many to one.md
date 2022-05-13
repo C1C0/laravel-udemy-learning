@@ -92,3 +92,65 @@ public function comments()
     return $this->hasMany(Comment::class);
 }
 ```
+
+## Lazy loading VS Eager loading
+
+### Lazy loading
+
+- data loaded upon the access required
+
+- NOTE: `Lazy loading` **alleviates** `N+1` Query problem
+
+```php
+$post = BlogPost::find(id);
+
+// Lazy loaded data
+$post->comments
+```
+
+```php
+// N+1 query problem
+
+// We get 25 BlogPosts
+$posts = BlogPost::all();
+ 
+// This will run 25 SELECT queries to DB
+foreach ($posts as $post) {
+    echo $post->comments;
+}
+```
+
+### Eager loading
+
+- pre-loading wanted data
+
+```php
+// We get 25 BlogPosts but with pre-loaded comments
+$posts = BlogPost::with('comments')->get();
+ 
+// No further queries are sent to DB
+foreach ($posts as $post) {
+    echo $post->comments;
+}
+```
+```php
+// Eager loading multiple relationships
+$posts = BlogPost::with(['comments', ['anotherRelationship'])->get();
+
+// Nested eager loading
+$posts = BlogPost::with('comments.tags')->get();
+
+// Eager loading specific columns
+$posts = BlogPost::with('comments:id,content')->get();
+
+// Constraining eager loading
+$posts = BlogPost::with('comments' => functino($query){
+    $query->where('id', 2);
+    ...OR
+    $query->orderBy('created_at', 'desc');
+    
+    /* !! WATCHOUT !! */
+    /* LIMIT and TAKE cannot be use here */
+})->get();
+
+```

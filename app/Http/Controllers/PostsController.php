@@ -25,7 +25,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::orderBy('created_at', 'desc')->get()]);
+        return view('posts.index', [
+            'posts' => BlogPost::withCount('comments')
+                ->orderBy('created_at', 'desc')
+                ->get(),
+        ]);
     }
 
     /**
@@ -63,7 +67,7 @@ class PostsController extends Controller
      */
     public function show(int $id)
     {
-        return view('posts.show', ['post' => BlogPost::findOrFail($id)]);
+        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
     }
 
     /**

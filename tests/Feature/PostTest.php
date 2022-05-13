@@ -17,7 +17,7 @@ class PostTest extends TestCase
         $response->assertSeeText('No posts here');
     }
 
-    public function testSee1BlogPostWhenThereIs1()
+    public function testSee1BlogPostWhenThereIs1WithNoComments()
     {
         # Arrange
         $post = $this->createDummyBlogpost();
@@ -27,11 +27,25 @@ class PostTest extends TestCase
 
         # Assert
         $response->assertSeeText($post->title);
+        $response->assertSeeText('No comments Yet !');
 
         # Check if in DB record with attribute
         $this->assertDatabaseHas('blog_posts', [
             'title' => $post->title,
         ]);
+    }
+
+    public function testSee1BlogPostWithComments()
+    {
+        # Arrange
+        $post = $this->createDummyBlogpost();
+
+        # Act
+        $response = $this->get('/posts');
+
+        # Assert
+        $response->assertSeeText($post->title);
+        $response->assertSeeText('No comments Yet !');
     }
 
     public function testStoreValid()
