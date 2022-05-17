@@ -39,7 +39,7 @@ class CommentFactory extends Factory
 ## Not following conventions
 
 - if you don't name your factories the way Laravel expects it OR is placed in different directory
-  - call `newFactory()` function in model.php file
+    - call `newFactory()` function in model.php file
 
 ```php
 /**
@@ -54,6 +54,7 @@ protected static function newFactory()
 ```
 
 Make sure you also define model in factory file:
+
 ```php
 class FlightFactory extends Factory
 {
@@ -68,4 +69,25 @@ class FlightFactory extends Factory
 
 ## STATES
 
+```php
+// in BlogPostFactory.php class
 
+    public function newTitle() // name of state
+    {
+        return $this->state(function (array $attributes) {
+            return [ // overridden attributes
+                'title' => 'New Title',
+                'content' => 'Content of the blog post',
+            ];
+        });
+    }
+```
+
+To use states:
+
+```php
+private function createDummyBlogpost(): BlogPost
+{
+    return BlogPost::factory()->newTitle()->create();
+}
+```

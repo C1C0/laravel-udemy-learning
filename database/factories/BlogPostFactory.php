@@ -27,4 +27,14 @@ class BlogPostFactory extends Factory
             'content' => $this->faker->paragraph(5),
         ];
     }
+
+    public function newTitle()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'title' => 'New Title',
+                'content' => 'Content of the blog post',
+            ];
+        });
+    }
 }

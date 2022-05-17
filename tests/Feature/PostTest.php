@@ -153,13 +153,8 @@ class PostTest extends TestCase
         $this->assertDatabaseMissing('blog_posts', $post->getAttributes());
     }
 
-    private function createDummyBlogpost($title = 'New Title', $content = 'Content of the blog post'): BlogPost
+    private function createDummyBlogpost(): BlogPost
     {
-        $post = new BlogPost();
-        $post->title = $title;
-        $post->content = $content;
-        $post->save();
-
-        return $post;
+        return BlogPost::factory()->newTitle()->create();
     }
 }
