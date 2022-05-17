@@ -1,0 +1,71 @@
+# Factories
+
+- Saves time
+
+## Specifying locale
+
+- in `config/app.php` set `faker_locale` option
+
+## Generate factory
+
+`php artisan make:factory PostFactory`
+
+```php
+// factory example
+
+class CommentFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Comment::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'content' => $this->faker->realTextBetween(100, 300),
+        ];
+    }
+}
+```
+
+## Not following conventions
+
+- if you don't name your factories the way Laravel expects it OR is placed in different directory
+  - call `newFactory()` function in model.php file
+
+```php
+/**
+ * Create a new factory instance for the model.
+ *
+ * @return \Illuminate\Database\Eloquent\Factories\Factory
+ */
+protected static function newFactory()
+{
+    return FlightFactory::new();
+}
+```
+
+Make sure you also define model in factory file:
+```php
+class FlightFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Flight::class;
+}
+```
+
+## STATES
+
+

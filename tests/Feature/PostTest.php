@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,6 +29,28 @@ class PostTest extends TestCase
         # Assert
         $response->assertSeeText($post->title);
         $response->assertSeeText('No comments Yet !');
+
+        # Check if in DB record with attribute
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => $post->title,
+        ]);
+    }
+
+    public function testSee1BlogPostWhenThereIs1WithComments()
+    {
+        # Arrange
+        $post = $this->createDummyBlogpost();
+
+        Comment::factory(4)->create([
+            'blog_post_id' => $post->id,
+        ]);
+
+        # Act
+        $response = $this->get('/posts');
+
+        # Assert
+        $response->assertSeeText($post->title);
+        $response->assertSeeText('4 comments');
 
         # Check if in DB record with attribute
         $this->assertDatabaseHas('blog_posts', [

@@ -24,7 +24,7 @@ class BlogPostFactory extends Factory
     {
         return [
             'title' => $this->faker->realTextBetween(20, 80),
-            'content' => $this->faker->realTextBetween(100, 300),
+            'content' => $this->faker->paragraph(5),
         ];
     }
 }
