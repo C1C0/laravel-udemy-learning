@@ -91,3 +91,47 @@ private function createDummyBlogpost(): BlogPost
     return BlogPost::factory()->newTitle()->create();
 }
 ```
+
+## Callbacks
+
+```php
+class BlogPostFactory extends Factory
+{
+    ...
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = BlogPost::class;
+
+    public function configure()
+    {
+        return $this->afterMaking(function (BlogPost $blogPost) {
+            //... do something
+        })->afterCreating(function (BlogPost $blogPost) {
+            //... do something different
+        });
+    }
+    ...
+}
+
+// EXAMPLE 2
+
+class AuthorFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Author::class;
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Author $author) {
+            $author->profile()->save(Profile::factory()->make());
+        });
+    }
+}
+```

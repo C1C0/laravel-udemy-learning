@@ -15,6 +15,15 @@ class BlogPostFactory extends Factory
      */
     protected $model = BlogPost::class;
 
+    public function configure()
+    {
+        return $this->afterMaking(function (BlogPost $blogPost) {
+            //... do something
+        })->afterCreating(function (BlogPost $blogPost) {
+            //... do something different
+        });
+    }
+
     /**
      * Define the model's default state.
      *
