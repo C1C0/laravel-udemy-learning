@@ -20,9 +20,11 @@
         <div class="alert alert-info">New !</div>
     @endif
 
+    <h3>Comments</h3>
     @forelse($post->comments as $comment)
-        <div class="p-2 bg-info mt-2">
-            <p>{{$comment->content}}</p>
+        <div class="p-2 border border-dark shadow-sm mt-3">
+            <p>{{$comment->content}}, <span class="font-italic">added: {{$comment->created_at->diffForHumans()}}</span>
+            </p>
         </div>
     @empty
         <p>No comments posted yet</p>
