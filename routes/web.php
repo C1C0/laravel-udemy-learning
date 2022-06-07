@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +37,5 @@ Route::resource('posts', PostsController::class);
 Route::get('/recent-posts/{days_ago?}', function (int $daysAgo = 20) {
     return "Posts from ".$daysAgo." days ago";
 })->name('posts.recent.index');
+
+Auth::routes();
