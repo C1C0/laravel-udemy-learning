@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\BlogPost;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -76,10 +77,11 @@ class PostTest extends TestCase
         $params = [
             'title' => 'Valid title',
             'content' => 'At least 10 characters',
+            'user_id' => ($user = $this->user())->id,
         ];
 
         $this
-            ->actingAs($this->user())
+            ->actingAs($user)
             ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
@@ -163,6 +165,11 @@ class PostTest extends TestCase
 
     private function createDummyBlogpost(): BlogPost
     {
-        return BlogPost::factory()->newTitle()->create();
+        if(User::find(1)){
+            return BlogPost::factory()->newTitle()->create(['user_id' => 1]);
+        }else{
+            return BlogPost::factory()->newTitle()->create(['user_id' => $this->user()->id]);
+        }
+
     }
 }
