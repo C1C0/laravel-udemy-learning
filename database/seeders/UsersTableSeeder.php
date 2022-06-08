@@ -15,7 +15,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->commonUser()->has(BlogPost::factory()->count(3))->create();
-        User::factory()->count(3)->has(BlogPost::factory()->count(3))->create();
+
+        $numberOfUsers = (int) max($this->command->ask('How many users would you like ?', 20), 1);
+
+        if ($this->command->confirm('Do you want to create common user ?')) {
+            User::factory()->commonUser()->has(BlogPost::factory()->count(3))->create();
+            $this->command->info('Common testing user created.');
+        }
+
+        User::factory()->count($numberOfUsers)->has(BlogPost::factory()->count(3))->create();
     }
 }

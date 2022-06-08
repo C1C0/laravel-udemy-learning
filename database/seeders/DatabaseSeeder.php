@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
 //        $this->call(BlogPostsTableSeeder::class);
 //        $this->call(CommentsTableSeeder::class);
 
+        if($this->command->confirm('Do you want to refresh the database ?')){
+            $this->command->call('migrate:fresh');
+            $this->command->info('Database was wiped and re-migrated');
+        }
+
         // OR
         $this->call([
             UsersTableSeeder::class,
