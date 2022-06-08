@@ -16,6 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(3)->has(BlogPost::factory()->count(3))->create();
+        $test = User::factory()->commonUser()->has(BlogPost::factory()->count(3))->create();
+        $others = User::factory()->count(3)->has(BlogPost::factory()->count(3))->create();
+
+        $users = $others->concat([$test]);
+
+        // Randomized version of populating users with BlogPosts
+        $posts = BlogPost::factory()->count(20)->make()->each(function(BlogPost $post) use($users){
+            $post->user_id = $users->random()->id;
+            $post->save();
+        });
+
+        $comments = Comment::factory()->count(150)->make()->each(function(Comment $comment) use($posts){
+           $comment->blog_post_id = $posts->random()->id;
+           $comment->save();
+        });
     }
 }
