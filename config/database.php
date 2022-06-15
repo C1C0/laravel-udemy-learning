@@ -47,6 +47,7 @@ return [
         'sqlite_testing' => [
             'driver' => 'sqlite',
             'database' => ":memory:",
+            'foreign_key_constraints' => true,
         ],
 
         'mysql' => [

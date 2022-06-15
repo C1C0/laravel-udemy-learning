@@ -11,7 +11,6 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
     use RefreshDatabase;
-
     public function testNoBlogPostsWhenNothingInDatabase()
     {
         $response = $this->get('/posts');
@@ -160,14 +159,14 @@ class PostTest extends TestCase
             ->assertSessionHas('status');
 
         $this->assertEquals(session('status'), 'Post Deleted !');
-        $this->assertDatabaseMissing('blog_posts', $post->getAttributes());
+        $this->assertSoftDeleted('blog_posts', $post->getAttributes());
     }
 
     private function createDummyBlogpost(): BlogPost
     {
-        if(User::find(1)){
+        if (User::find(1)) {
             return BlogPost::factory()->newTitle()->create(['user_id' => 1]);
-        }else{
+        } else {
             return BlogPost::factory()->newTitle()->create(['user_id' => $this->user()->id]);
         }
 
