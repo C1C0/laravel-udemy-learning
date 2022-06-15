@@ -13,7 +13,10 @@
     <p> {{ $post->content }}</p>
 
     {{-- Using carbon time library --}}
-    <p>Added {{ $post->created_at->diffForHumans() }}</p>
+    <p>
+        Added {{ $post->created_at->diffForHumans() }}
+        by {{$post->user->name}}
+    </p>
 
     {{-- Carbon diffInMinutes --}}
     @if(now()->diffInMinutes($post->created_at) < 5)
