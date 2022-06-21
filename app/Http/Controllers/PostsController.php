@@ -13,6 +13,7 @@ use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Gate;
 use function PHPUnit\Framework\returnArgument;
 
 class PostsController extends Controller
@@ -85,7 +86,13 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        return view('posts.edit', ['post' => BlogPost::findOrFail($id)]);
+        $post = BlogPost::findOrFail($id);
+
+        if (Gate::denies('update-post', $post)) {
+            abort(403);
+        }
+
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -102,6 +109,10 @@ class PostsController extends Controller
         $post->fill($validated);
         $post->save();
 
+        if (Gate::denies('update-post', $post)) {
+            abort(403);
+        }
+
         $request->session()->flash('status', 'Blog post was updated !');
 
         return redirect()->route('posts.show', ['post' => $post->id]);
@@ -116,6 +127,11 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = BlogPost::findOrFail($id);
+
+        if (Gate::denies('update-post', $post)) {
+            abort(403);
+        }
+
         $post->delete();
 
         session()->flash('status', 'Post Deleted !');
