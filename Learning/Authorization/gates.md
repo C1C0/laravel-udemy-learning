@@ -20,7 +20,11 @@ Gate::define('update-post', function (User $user, BlogPost $post) {
 ## Usage
 
 ```php
+// When used in controller -> Auth() user used
 if (Gate::denies('update-post', $post)) {
     abort(403);
 }
+
+// when want to use it for particular/specific user
+Gate::forUser($user)->allows('update-post', $post); // true | false
 ```
