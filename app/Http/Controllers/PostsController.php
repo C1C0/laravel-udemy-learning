@@ -88,9 +88,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        if (Gate::denies('update-post', $post)) {
-            abort(403);
-        }
+        $this->authorize('update-post', $post);
 
         return view('posts.edit', ['post' => $post]);
     }
@@ -109,9 +107,7 @@ class PostsController extends Controller
         $post->fill($validated);
         $post->save();
 
-        if (Gate::denies('update-post', $post)) {
-            abort(403);
-        }
+        $this->authorize('update-post', $post);
 
         $request->session()->flash('status', 'Blog post was updated !');
 
@@ -128,9 +124,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        if (Gate::denies('update-post', $post)) {
-            abort(403);
-        }
+        $this->authorize('delete-post', $post);
 
         $post->delete();
 
