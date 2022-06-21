@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
 
         $numberOfUsers = (int) max($this->command->ask('How many users would you like ?', 20), 1);
 
-        if ($this->command->confirm('Do you want to create common user ?')) {
+        if ($this->command->confirm('Do you want to create common user ?', true)) {
             User::factory()->commonUser()->has(BlogPost::factory()->count(3))->create();
             $this->command->info('Common testing user created.');
         }
