@@ -27,4 +27,19 @@ if (Gate::denies('update-post', $post)) {
 
 // when want to use it for particular/specific user
 Gate::forUser($user)->allows('update-post', $post); // true | false
+
+// if we want to override other gates
+// in real life - you use Action Control List or Roles
+Gate::before(function($user, $ability){
+    if($user->is_admin){
+        return true;
+    }
+
+    return null;
+});
+
+// 
+Gate::after(function($user, $ability, $result, $arguments){
+...
+})
 ```
