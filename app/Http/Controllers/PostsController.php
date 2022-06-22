@@ -88,7 +88,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('update-post', $post);
+        $this->authorize('update', $post);
 
         return view('posts.edit', ['post' => $post]);
     }
@@ -107,7 +107,7 @@ class PostsController extends Controller
         $post->fill($validated);
         $post->save();
 
-        $this->authorize('update-post', $post);
+        $this->authorize('update', $post);
 
         $request->session()->flash('status', 'Blog post was updated !');
 
@@ -124,7 +124,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('delete-post', $post);
+        $this->authorize('delete', $post);
 
         $post->delete();
 
