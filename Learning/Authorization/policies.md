@@ -2,6 +2,7 @@
 
 - common command: `php artisan make:policy [NAME]`
 - more advanced func.: `php artisan make:policy [NAME] --model=[MODEL_NAME]`
+- meant to be used mainly for model resources
 
 ## Old way of registering
 
