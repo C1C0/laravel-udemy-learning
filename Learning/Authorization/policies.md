@@ -33,3 +33,14 @@ in AuthServiceProvider
 ```
 
 ### Usage
+```php
+$this->authorize('update', $post);
+$this->authorize('delete', $post);
+
+/* Handled by laravel autodiscovery - use, if you are using standard Laravel approaches */
+// on update / edit action
+$this->authorize($post); // calls update
+
+// on destroy action
+$this->authorize($post) // calls delete
+```
