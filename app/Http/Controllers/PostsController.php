@@ -13,6 +13,7 @@ use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use function PHPUnit\Framework\returnArgument;
 
@@ -58,7 +59,13 @@ class PostsController extends Controller
     public function store(StorePost $request)
     {
         $validated = $request->validated();
-        $validated += $request->validate(['user_id' => ['required', 'numeric', 'gt:0']]);
+
+
+        if (isset($validated['user_id'])) {
+            $validated += $request->validate(['user_id' => ['required', 'numeric', 'gt:0']]);
+        }else{
+            $validated['user_id'] = Auth::user()->id;
+        }
 
         $post = BlogPost::create($validated);
 
