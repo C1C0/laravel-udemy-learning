@@ -2,15 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\PostsController;
 use App\Models\BlogPost;
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostTest extends TestCase
 {
     use RefreshDatabase;
+
     public function testNoBlogPostsWhenNothingInDatabase()
     {
         $response = $this->get('/posts');
@@ -117,10 +120,11 @@ class PostTest extends TestCase
     public function testUpdateValid()
     {
         # Arrange
-        $post = $this->createDummyBlogpost();
+        $user = $this->user();
+        $post = $this->createDummyBlogpost($user);
 
         # Check if in DB record with attribute
-        // checks all colums
+        // checks all columns
         $this->assertDatabaseHas('blog_posts', $post->getAttributes());
 
         $params = [
@@ -129,8 +133,8 @@ class PostTest extends TestCase
         ];
 
         $this
-            ->actingAs($this->user())
-            ->put("/posts/{$post->id}", $params)
+            ->actingAs($user)
+            ->put(action([PostsController::class, 'update'], $post), $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
 
@@ -148,12 +152,13 @@ class PostTest extends TestCase
 
     public function testDelete()
     {
-        $post = $this->createDummyBlogpost();
+        $user = $this->user();
+        $post = $this->createDummyBlogpost($user);
 
         $this->assertDatabaseHas('blog_posts', $post->getAttributes());
 
         $this
-            ->actingAs($this->user())
+            ->actingAs($user)
             ->delete("/posts/{$post->id}")
             ->assertStatus(302)
             ->assertSessionHas('status');
@@ -162,13 +167,8 @@ class PostTest extends TestCase
         $this->assertSoftDeleted('blog_posts', $post->getAttributes());
     }
 
-    private function createDummyBlogpost(): BlogPost
+    private function createDummyBlogpost(User $user = null): BlogPost
     {
-        if (User::find(1)) {
-            return BlogPost::factory()->newTitle()->create(['user_id' => 1]);
-        } else {
-            return BlogPost::factory()->newTitle()->create(['user_id' => $this->user()->id]);
-        }
-
+        return BlogPost::factory()->newTitle()->create(['user_id' => $user ? $user->id : $this->user()->id]);
     }
 }

@@ -103,11 +103,12 @@ class PostsController extends Controller
     public function update(StorePost $request, $id)
     {
         $post = BlogPost::findOrFail($id);
+        $this->authorize($post);
+
         $validated = $request->validated();
         $post->fill($validated);
         $post->save();
 
-        $this->authorize($post);
 
         $request->session()->flash('status', 'Blog post was updated !');
 

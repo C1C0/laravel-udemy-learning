@@ -53,7 +53,7 @@ class BlogPostPolicy
      */
     public function update(User $user, BlogPost $blogPost)
     {
-        return $blogPost->user_id === $user->id;
+        return (int) $blogPost->user_id === $user->id;
     }
 
     /**
@@ -65,7 +65,7 @@ class BlogPostPolicy
      */
     public function delete(User $user, BlogPost $blogPost)
     {
-        return $blogPost->user_id === $user->id;
+        return (int) $blogPost->user_id === $user->id;
     }
 
     /**
