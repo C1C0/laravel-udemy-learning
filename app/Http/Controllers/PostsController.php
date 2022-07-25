@@ -62,7 +62,7 @@ class PostsController extends Controller
 
         if (isset($validated['user_id'])) {
             $validated += $request->validate(['user_id' => ['required', 'numeric', 'gt:0']]);
-        }else{
+        } else {
             $validated['user_id'] = Auth::user()->id;
         }
 
@@ -81,9 +81,11 @@ class PostsController extends Controller
      */
     public function show(int $id)
     {
-        return view('posts.show', ['post' => BlogPost::with(['comments' => function ($query){
-            return $query->latest();
-        }])->findOrFail($id)]);
+//        return view('posts.show', ['post' => BlogPost::with(['comments' => function ($query){
+//            return $query->latest();
+//        }])->findOrFail($id)]);
+
+        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
     }
 
     /**
