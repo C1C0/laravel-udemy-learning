@@ -24,6 +24,7 @@ class CommentFactory extends Factory
     {
         return [
             'content' => $this->faker->realTextBetween(100, 300),
+            'created_at' => $this->faker->dateTimeBetween('-3 months'),
         ];
     }
 }
