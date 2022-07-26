@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,5 +48,21 @@ class User extends Authenticatable
     public function blogPost(): HasMany
     {
         return $this->hasMany(BlogPost::class);
+    }
+
+    public function scopeWithMostBlogPosts(Builder $query)
+    {
+        return $query->withCount('blogPost')->orderBy('blog_post_count', 'desc');
+    }
+
+    public function scopeWithMostBlogPostsLastMonth(Builder $query)
+    {
+        return $query->withCount([
+            'blogPost' => function (Builder $query) {
+                return $query->whereBetween(static::CREATED_AT, [Carbon::now()->subMonths(2), Carbon::now()]);
+        }
+        ])
+            ->has('blogPost', '>=', 2)
+            ->orderBy('blog_post_count', 'desc');
     }
 }
