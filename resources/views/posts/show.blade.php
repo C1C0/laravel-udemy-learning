@@ -9,7 +9,15 @@
 @section('title', $post->title)
 
 @section('content')
-    <h1>{{ $post->title }}</h1>
+    <h1 class="d-flex align-items-start mt-3">
+        <span class="mr-2">
+        {{ $post->title }}
+            </span>
+        {{-- Carbon diffInMinutes --}}
+        <x-badge type="primary" :show="now()->diffInMinutes($post->created_at) < 5">
+            Brand new Post !
+        </x-badge>
+    </h1>
     <p> {{ $post->content }}</p>
 
     {{-- Using carbon time library --}}
@@ -17,13 +25,6 @@
         Added {{ $post->created_at->diffForHumans() }}
         by {{$post->user->name}}
     </p>
-
-    {{-- Carbon diffInMinutes --}}
-    @if(now()->diffInMinutes($post->created_at) < 20)
-        <x-badge type="primary">
-            Brand new Post !
-        </x-badge>
-    @endif
 
     <h3>Comments</h3>
     @forelse($post->comments as $comment)
