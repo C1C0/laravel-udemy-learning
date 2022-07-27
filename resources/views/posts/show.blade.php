@@ -20,9 +20,9 @@
 
     {{-- Carbon diffInMinutes --}}
     @if(now()->diffInMinutes($post->created_at) < 20)
-        @component('posts.badge', ['type' => 'primary'])
+        <x-badge type="primary">
             Brand new Post !
-        @endcomponent
+        </x-badge>
     @endif
 
     <h3>Comments</h3>
