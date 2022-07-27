@@ -20,16 +20,13 @@
     </h1>
     <p> {{ $post->content }}</p>
 
-    {{-- Using carbon time library --}}
-    <p>
-        Added {{ $post->created_at->diffForHumans() }}
-        by {{$post->user->name}}
-    </p>
-
+    <x-updated :date="$post->created_at" :name="$post->user->name"></x-updated>
+    <x-updated :date="$post->updated_at">Updated</x-updated>
     <h3>Comments</h3>
     @forelse($post->comments as $comment)
         <div class="p-2 border border-dark shadow-sm mt-3">
-            <p>{{$comment->content}}, <span class="font-italic">added: {{$comment->created_at->diffForHumans()}}</span>
+            <p>{{$comment->content}},
+                <x-updated :date="$comment->created_at"></x-updated>
             </p>
         </div>
     @empty
