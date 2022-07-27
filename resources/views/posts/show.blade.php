@@ -19,8 +19,8 @@
     </p>
 
     {{-- Carbon diffInMinutes --}}
-    @if(now()->diffInMinutes($post->created_at) < 5)
-        @component('posts.badge')
+    @if(now()->diffInMinutes($post->created_at) < 20)
+        @component('posts.badge', ['type' => 'primary'])
             Brand new Post !
         @endcomponent
     @endif
