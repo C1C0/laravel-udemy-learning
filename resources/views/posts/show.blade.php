@@ -20,7 +20,9 @@
 
     {{-- Carbon diffInMinutes --}}
     @if(now()->diffInMinutes($post->created_at) < 5)
-        <div class="alert alert-info">New !</div>
+        @component('posts.badge')
+            Brand new Post !
+        @endcomponent
     @endif
 
     <h3>Comments</h3>
