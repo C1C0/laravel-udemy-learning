@@ -52,6 +52,8 @@
                     </div>
                 </div>
 
+                <x-card title="Most Active" subtitle="Users with most posts written" :items="collect($mostActive)->pluck('name')->toArray()"></x-card>
+
                 <div class="row mt-3">
                     <div class="card" style="width: 100%">
                         <div class="card-body">

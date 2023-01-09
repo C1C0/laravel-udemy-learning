@@ -28,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('notEmpty', function($value){
            return !empty($value);
         });
+
+        Blade::component('components.badge', 'badge');
     }
 }

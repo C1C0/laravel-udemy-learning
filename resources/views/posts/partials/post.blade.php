@@ -1,10 +1,7 @@
 <div style="opacity : {{$post->trashed() ? '.25' : '1'}}">
     <h3><a href="{{ route('posts.show', ['post' => $post->id] ) }}">{{ $post->title }}</a></h3>
 
-    <p>
-        Added {{ $post->created_at->diffForHumans() }}
-        by {{$post->user->name}}
-    </p>
+    <x-updated :date="$post->created_at" :name="$post->user->name"></x-updated>
 
     @if($post->comments_count)
         <p>{{$post->comments_count}} comments</p>
