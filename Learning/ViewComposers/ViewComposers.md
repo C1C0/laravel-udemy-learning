@@ -90,3 +90,14 @@ class ProfileComposer
     }
 }
 ```
+
+# ViewCreators
+
+- similar to composers, but executed immediately after the view is instantiated instead of waiting until the view is about to render
+
+```php
+use App\View\Creators\ProfileCreator;
+use Illuminate\Support\Facades\View;
+ 
+View::creator('profile', ProfileCreator::class);
+```
